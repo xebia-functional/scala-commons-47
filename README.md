@@ -9,7 +9,7 @@ An heterogeneous collection of Scala related utils, traits and classes
 Allows mixing heterogeneous expressions in for comprehensions without the need for nested flatmaps or nested for - yield.
 Uses Scalaz ```OptionT``` to resolve ```Future[Option]``` expressions into their flattened values.
 
-Consider a case where you have need to pass values from functions with heterogeneous result types and that are somewhat chained or dependent in a list of operations.
+Consider a case where you have the need to pass values from functions with heterogeneous result types and that are somewhat chained or dependent in a list of operations.
 
 ```scala
 
