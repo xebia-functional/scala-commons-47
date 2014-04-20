@@ -36,7 +36,7 @@ Simply add the following dependency to your SBT based build
 
 resolvers += "47deg Public" at "http://clinker.47deg.com/nexus/content/groups/public"
 
-libraryDependencies += "com.fortysevendeg" %% "scala-commons-47" % "0.1-SNAPSHOT"
+libraryDependencies += "com.fortysevendeg" %% "scala-commons-47" % "0.1-SNAPSHOT" changing()
 
 ```
 
