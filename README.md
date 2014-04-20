@@ -4,9 +4,7 @@
 
 An heterogeneous collection of Scala related utils, traits and classes
 
-# Monad utils
-
-## OptionTFutureConversion
+*OptionTFutureConversion*
 
 Allows mixing heterogeneous expressions in for comprehensions without the need for nested flatmaps or nested for - yield.
 Uses Scalaz ```OptionT``` to resolve ```Future[Option]``` expressions into their flattened values.
@@ -22,15 +20,13 @@ def test = for {
     d <- optT <* List(1, 2, 3)
 } yield (a, b, c, d)
 
-// test.run resolves into a Future[Option[(a,b,c,d)]] with all it's values flattened
+// test.run resolves into a Future[Option[(a,b,c,d)]] with all it's inner values flattened
 
 ````
 
-test.run
-
-```<*``` wraps any expression into an async Future(exp) then ```OptionT[Future, A]```
-```<~``` wraps any expression into its ```OptionT[Future, A]```
-```?``` is a an alias for ```optT```
+- ```<*``` wraps any expression into an async Future(exp) then ```OptionT[Future, A]```
+- ```<~``` wraps any expression into its ```OptionT[Future, A]```
+- ```?``` is a an alias for ```optT```
 
 # Credits
 
