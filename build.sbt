@@ -20,9 +20,9 @@ resolvers ++= Seq("snapshots", "releases").map(Resolver.sonatypeRepo)
 
 resolvers += "47deg Public" at "http://clinker.47deg.com/nexus/content/groups/public"
 
-resolvers += "47deg Public Snapshot Repository" at "http://clinker.47deg.com/nexus/content/repositories/public-snapshots"
+resolvers += "47deg Public Snapshot Repository" at "http://clinker.47deg.com/nexus/content/repositories/snapshots"
 
-resolvers += "47deg Public Release Repository" at "http://clinker.47deg.com/nexus/content/repositories/public-releases"
+resolvers += "47deg Public Release Repository" at "http://clinker.47deg.com/nexus/content/repositories/releases"
 
 // Add your own project settings here
 Keys.fork in Test := false
@@ -38,9 +38,9 @@ publishMavenStyle := true
 publishTo <<= version {
   v: String =>
     if (v.trim.endsWith("SNAPSHOT"))
-      Some("47deg Public Snapshot Repository" at "http://clinker.47deg.com/nexus/content/repositories/public-snapshots")
+      Some("47deg Public Snapshot Repository" at "http://clinker.47deg.com/nexus/content/repositories/snapshots")
     else
-      Some("47deg Public Release Repository" at "http://clinker.47deg.com/nexus/content/repositories/public-releases")
+      Some("47deg Public Release Repository" at "http://clinker.47deg.com/nexus/content/repositories/releases")
 }
 
 startYear := Some(2014)
