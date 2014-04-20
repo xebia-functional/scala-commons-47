@@ -27,7 +27,7 @@ resolvers += "47deg Public Release Repository" at "http://clinker.47deg.com/nexu
 // Add your own project settings here
 Keys.fork in Test := false
 
-organization := "ly.apps"
+organization := "com.fortysevendeg"
 
 organizationName := "47 Degrees"
 

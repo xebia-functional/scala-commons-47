@@ -28,6 +28,19 @@ def test = for {
 - ```<~``` wraps any expression into its ```OptionT[Future, A]```
 - ```?``` is a an alias for ```optT```
 
+# Install
+
+Simply add the following dependency to your SBT based build
+
+```scala
+
+resolvers += "47deg Public" at "http://clinker.47deg.com/nexus/content/groups/public"
+
+libraryDependencies += "com.fortysevendeg" %% "scala-commons-47" % "0.1-SNAPSHOT"
+
+```
+
+
 # Credits
 
 Scala Commons 47 is a library maintained by the [47 Degrees](http://47deg.com) team.
