@@ -9,20 +9,72 @@ An heterogeneous collection of Scala related utils, traits and classes
 Allows mixing heterogeneous expressions in for comprehensions without the need for nested flatmaps or nested for - yield.
 Uses Scalaz ```OptionT``` to resolve ```Future[Option]``` expressions into their flattened values.
 
+Consider a case where you have need to pass values from functions with heterogeneous result types and that are somewhat chained or dependent in a list of operations.
+
+```scala
+
+def fetchSample1: Future[Option[Int]] = ???
+
+def fetchSample2(sample1: Int): Future[Option[Int]] = ???
+
+def compute(a: Int, b: Int): Option[Int] = ???
+
+def anotherAsyncComputation(previousComputation: Int): Future[Int] = ???
+
+```
+
+In plain Scala you may chain nested flatMap calls to keep the types compatible...
+
+```scala
+
+def plainScalaImpl: Future[Option[Int]] = fetchSample1 flatMap {
+    case Some(sample1) => fetchSample2(sample1) flatMap {
+      case Some(sample2) =>
+        compute(sample1, sample2) match {
+          case Some(previousComputation) => anotherAsyncComputation(previousComputation) map (Option(_))
+          case _ => Future.successful(None)
+        }
+    }
+}
+
+```
+
+Alternatively with Scalaz OptionT monad transformer and some boilerplate you can keep the types compatible in
+a single for comprehension like so...
+
+```scala
+
+import scalaz._
+import scalaz.OptionT._
+
+def optionTImpl: Future[Option[Int]] = (for {
+    sample1 <- optionT(fetchSample1)
+    sample2 <- optionT(fetchSample2(sample1))
+    previousComputation <- optionT(Future.successful(compute(sample1, sample2)))
+    finalResult <- optionT(anotherAsyncComputation(previousComputation) map (Option(_)))
+  } yield finalResult).run
+
+```
+
+Finally with The OptionTFutureUtils you can further simplify it to
+
 ```scala
 
 import com.fortysevendeg.commons.scala.utils.OptionTFutureConversion._
 
-def test = for {
-    a <- ? <~ Future(Option(1))
-    b <- optT <~ Some(1)
-    c <- optT <~ Some(List(1, 2, 3))
-    d <- optT <* List(1, 2, 3)
-} yield (a, b, c, d)
+def optionTFutureUtils : Future[Option[Int]] = (for {
+    sample1 <- ? <~ fetchSample1
+    sample2 <- ? <~ fetchSample2(sample1)
+    previousComputation <- ? <~ compute(sample1, sample2)
+    finalResult <- ? <~  anotherAsyncComputation(previousComputation)
+  } yield finalResult).run
 
-// test.run resolves into a Future[Option[(a,b,c,d)]] with all it's inner values flattened
+```
 
-````
+Note type wrapping to Future[Option] is no longer necessary as the conversions are automatically provided for many common objects
+such as Option, Future[A], A, etc...
+
+This keeps for a nice and simpler operation chaining resulting in  the final Future[Option[A]]
 
 - ```<*``` wraps any expression into an async Future(exp) then ```OptionT[Future, A]```
 - ```<~``` wraps any expression into its ```OptionT[Future, A]```
