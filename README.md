@@ -2,9 +2,11 @@
 
 # Scala Commons 47
 
+## Monad Utils
+
 An heterogeneous collection of Scala related utils, traits and classes
 
-**OptionTFutureConversion**
+### OptionTFutureConversion
 
 Allows mixing heterogeneous expressions in for comprehensions without the need for nested flatmaps or nested for - yield.
 Uses Scalaz ```OptionT``` to resolve ```Future[Option]``` expressions into their flattened values.
