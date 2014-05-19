@@ -49,7 +49,7 @@ description := "47 Degrees Commons Scala Utils"
 
 homepage := Some(url("http://47deg.com"))
 
-scmInfo := Some(ScmInfo(url("https://github.com/47deg/appsly-server-ninecards"), "https://github.com/47deg/appsly-server-9.git"))
+scmInfo := Some(ScmInfo(url("https://github.com/47deg/appsly-commons-47"), "https://github.com/47deg/appsly-commons-47.git"))
 
 pomExtra :=
   <developers>
