@@ -1,5 +1,3 @@
-[![Build Status](https://clinker.47deg.com/desktop/plugin/public/status/scala-commons-47.png?branch=master)](https://clinker.47deg.com/jenkins/job/scala-commons-47/)
-
 # Scala Commons 47
 
 ## Monad Utils
@@ -88,7 +86,7 @@ Simply add the following dependency to your SBT based build
 
 ```scala
 
-resolvers += "47deg Public" at "http://clinker.47deg.com/nexus/content/groups/public"
+resolvers += "47deg Public" at "https://47degrees.bintray.com/snapshots"
 
 libraryDependencies += "com.fortysevendeg" %% "scala-commons-47" % "0.1-SNAPSHOT" changing()
 
