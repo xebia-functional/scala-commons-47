@@ -2,14 +2,15 @@ name := "scala-commons-47"
 
 version := "0.1-SNAPSHOT"
 
+scalaVersion := "2.11.8"
+
 libraryDependencies ++= Seq(
-  "org.typelevel" %% "scalaz-contrib-210" % "0.1.5",
-  "org.typelevel" %% "scalaz-contrib-validation" % "0.1.5",
-  "org.typelevel" %% "scalaz-contrib-undo" % "0.1.5",
-  "org.typelevel" %% "scalaz-lift" % "0.1.5",
-  "org.typelevel" %% "scalaz-nscala-time" % "0.1.5",
-  "org.typelevel" %% "scalaz-spire" % "0.1.5",
-  "org.specs2" %% "specs2" % "2.3.11" % "test"
+  "org.typelevel" %% "scalaz-contrib-210" % "0.2",
+  "org.typelevel" %% "scalaz-contrib-validation" % "0.2",
+  "org.typelevel" %% "scalaz-contrib-undo" % "0.2",
+  "org.typelevel" %% "scalaz-nscala-time" % "0.2",
+  "org.typelevel" %% "scalaz-spire" % "0.2",
+  "org.specs2" %% "specs2" % "3.7" % "test"
 )
 
 scalacOptions in Test ++= Seq("-Yrangepos")

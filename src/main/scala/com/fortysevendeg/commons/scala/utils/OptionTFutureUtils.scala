@@ -1,10 +1,11 @@
 package com.fortysevendeg.commons.scala.utils
 
 
-import scalaz._
-import scalaz.OptionT._
 import scala.concurrent.{ExecutionContext, Future}
-import scala.Some
+import scala.reflect.ClassTag
+import scala.reflect.runtime.universe._
+import scalaz.OptionT._
+import scalaz._
 
 /**
  * Allows mixing expressions in for comprehensions without the need for nested flatmaps or nested for - yield.
@@ -40,23 +41,23 @@ trait OptionTFutureConversionOps {
     override def bind[A, B](fa: Future[A])(f: A => Future[B]): Future[B] = fa flatMap f
   }
 
-  def toFutureOptionT[A](x: => Future[Option[A]])(implicit d: DummyImplicit): Result[A] = optionT(x)
+  def toFutureOptionT[A](x: => Future[Option[A]])(implicit ec: ExecutionContext, e: TypeTag[Future[_]], ee: TypeTag[Option[_]]): Result[A] = optionT(x)
 
-  def toFutureOptionT[A](x: => Future[A])(implicit ec: ExecutionContext): Result[A] = optionT(x map (Some(_)))
+  def toFutureOptionT[A](x: => Future[A])(implicit ec: ExecutionContext, e: TypeTag[Future[_]]): Result[A] = optionT(x map (Some(_)))
 
-  def toFutureOptionT[A](x: => Option[A])(implicit d: DummyImplicit, e: DummyImplicit): Result[A] = toFutureOptionT(Future.successful(x))
+  def toFutureOptionT[A](x: => Option[A])(implicit ec: ExecutionContext, ev: ClassTag[Option[_]]): Result[A] = toFutureOptionT(Future.successful(x))
 
-  def toFutureOptionT[A](x: => A): Result[A] = toFutureOptionT(Future.successful(Some(x)))
+  def toFutureOptionT[A](x: => A)(implicit ec: ExecutionContext): Result[A] = toFutureOptionT(Future.successful(Some(x)))
 
   def toAsyncFutureOptionT[A](x: => A)(implicit ec: ExecutionContext): Result[A] = toFutureOptionT(Future(x))
 
-  def <~[A](x: => Future[Option[A]])(implicit ec: ExecutionContext, d: DummyImplicit): Result[A] = toFutureOptionT(x)
+  def <~[A](x: => Future[Option[A]])(implicit ec: ExecutionContext, e: TypeTag[Future[_]], ee: TypeTag[Option[_]]): Result[A] = toFutureOptionT(x)
 
-  def <~[A](x: => Future[A])(implicit ec: ExecutionContext): Result[A] = toFutureOptionT(x)
+  def <~[A](x: => Future[A])(implicit ec: ExecutionContext, ev: TypeTag[Future[_]]): Result[A] = toFutureOptionT(x)
 
-  def <~[A](x: => Option[A])(implicit d: DummyImplicit): Result[A] = toFutureOptionT(x)
+  def <~[A](x: => Option[A])(implicit ec: ExecutionContext, ev: ClassTag[Option[_]]): Result[A] = toFutureOptionT(x)
 
-  def <~[A](x: => A): Result[A] = toFutureOptionT(x)
+  def <~[A](x: => A)(implicit ec: ExecutionContext): Result[A] = toFutureOptionT(x)
 
   def <*[A](x: => A)(implicit ec: ExecutionContext): Result[A] = toAsyncFutureOptionT(x)
 
