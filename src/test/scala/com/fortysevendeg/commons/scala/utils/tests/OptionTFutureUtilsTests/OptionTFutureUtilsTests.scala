@@ -4,6 +4,7 @@ import org.specs2.mutable._
 import com.fortysevendeg.commons.scala.utils.OptionTFutureConversion._
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.Duration
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class OptionTFutureUtilsTests extends Specification {
 
