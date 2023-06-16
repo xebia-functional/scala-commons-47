@@ -1,8 +1,8 @@
-# Scala Commons 47
+# Scala Commons 47 (ARCHIVED)
 
-## Monad Utils
+## ScalaZ Monad Utils
 
-An heterogeneous collection of Scala related utils, traits and classes
+This repository defines an heterogeneous collection of Scala related utils, traits and classes, to ease the use of the ScalaZ library.
 
 ### OptionTFutureConversion
 
